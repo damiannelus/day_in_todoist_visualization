@@ -1,9 +1,9 @@
 
-import Vector from './vector'
+import {Vector} from './vector'
 import random from 'canvas-sketch-util/random';
 const utils = require('../utils/utils');
 
-class Agent {
+export default class Agent {
   constructor(x, y, isFloating) {
     this.pos = new Vector(x,y);
     this.anchor = new Vector(x,y);
@@ -44,8 +44,4 @@ class Agent {
     if (Math.abs(this.pos.y - this.anchor.y) > 10) this.vel.y *= -1;
   }
   
-}
-
-module.exports = {
-  Agent
 }
