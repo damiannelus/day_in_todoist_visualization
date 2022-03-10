@@ -3,7 +3,7 @@ import {Vector} from './vector'
 import random from 'canvas-sketch-util/random';
 const utils = require('../utils/utils');
 
-export default class Agent {
+class Agent {
   constructor(x, y, isFloating) {
     this.pos = new Vector(x,y);
     this.anchor = new Vector(x,y);
@@ -28,7 +28,6 @@ export default class Agent {
         (this.pos.x/width)*255, 
         (this.pos.y/height)*255) : 
         'black';
-    console.log('context.strokeStyle :>> ', context.strokeStyle);
     context.fill();
     context.stroke();
     context.restore();
@@ -45,3 +44,5 @@ export default class Agent {
   }
   
 }
+
+export {Agent}

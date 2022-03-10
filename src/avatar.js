@@ -47,7 +47,6 @@ const sketch = ({ width, height }) => {
         // color based on the position of the agent
         agent.draw(context, width, height);
         agent.bounce(width, height);
-        console.log('agent :>> ', agent);
       }
     }
 
@@ -58,10 +57,11 @@ const sketch = ({ width, height }) => {
         // color based on the position of the agent
         agent.draw(context, width, height);
         agent.bounce(width, height);
-        console.log('agent :>> ', agent);
       }
     }
   };
 };
 
 canvasSketch(sketch, settings);
+
+export {sketch}
