@@ -10,7 +10,10 @@ class Agent {
     this.radius = random.range(4,12);
     this.isFloating = isFloating;
     this.vel = isFloating ? new Vector(random.range(-1,1), random.range(-1,1)) : new Vector(0,0);
+    this.taskID = 0;
+    this.colorID = 666;
   }
+
 
   update() {
     this.pos.x += this.vel.x;
@@ -23,11 +26,7 @@ class Agent {
     context.lineWidth = 3;
     context.beginPath();
     context.arc(0, 0, this.radius, 0, Math.PI * 2);
-    context.strokeStyle = this.isFloating ? 
-      utils.rgb2hex(200, 
-        (this.pos.x/width)*255, 
-        (this.pos.y/height)*255) : 
-        'black';
+    context.strokeStyle = this.color;
     context.fill();
     context.stroke();
     context.restore();

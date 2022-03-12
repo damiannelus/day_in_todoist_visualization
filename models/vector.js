@@ -1,7 +1,9 @@
-export class Vector {
+class Vector {
 
   constructor(x, y) {
     this.x = x;
     this.y = y;
   }
 }
+
+export {Vector}
