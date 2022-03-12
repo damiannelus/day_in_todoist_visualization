@@ -2,6 +2,7 @@ import canvasSketch from 'canvas-sketch';
 // const Agent = require('../models/agent');
 import { Agent } from '../models/agent.js'
 import random from 'canvas-sketch-util/random';
+require('dotenv').config()
 
 const settings = {
   dimensions: [1080, 1080],
