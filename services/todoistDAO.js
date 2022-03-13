@@ -1,7 +1,6 @@
 // get data
-require('dotenv').config();
+import {TODOIST_BEREAER_TOKEN} from '../secrets'
 // Shitty code ahead
-const TODOIST_BEREAER_TOKEN = "567202f6bca21c2c35af51f91c4c004bde9d0db4"
 const REST_API_URL = "https://api.todoist.com/rest/v1/"
 const SYNC_API_URL = "https://api.todoist.com/sync/v8/"
 const NO_DATE_FILTER = `tasks?filter=no date`
