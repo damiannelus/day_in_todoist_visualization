@@ -34,8 +34,22 @@ async function getTodayAgents(todoistDAO) {
   return todayAgents;
 }
 
+async function getDoneTodayAgents(todoistDAO) {
+  const doneToday = [];
+  const doneTodayTasks = await todoistDAO.getDoneToday();
+  if (doneTodayTasks.items.length > 0) {
+    doneTodayTasks.items.forEach(task => {
+      const color = todoistDAO.getColorForProject(task.project_id);
+      const agent = new Agent(0,0,false, getRadiusByPriority(task.priority), color);
+      doneToday.push(agent);
+    });
+  }
+  console.log('doneToday :>> ', doneToday);
+  return doneToday;
+}
+
 function getRadiusByPriority(priority) {
   return radiusPriorityMap.get(priority) || 4;
 }
 
-export {getNoDateAgents, getTodayAgents}
+export {getNoDateAgents, getTodayAgents, getDoneTodayAgents}

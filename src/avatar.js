@@ -2,7 +2,7 @@ require('dotenv').config()
 import canvasSketch from 'canvas-sketch';
 // const Agent = require('../models/agent');
 import random from 'canvas-sketch-util/random';
-import { getNoDateAgents, getTodayAgents} from '../middleware/todoist/todoist'
+import { getNoDateAgents, getTodayAgents, getDoneTodayAgents} from '../middleware/todoist/todoist'
 import {TodoistDAO} from '../services/todoistDAO'
 
 const settings = {
@@ -17,7 +17,7 @@ const sketch = async ({ width, height }) => {
   const todoistDAO = new TodoistDAO();
   await todoistDAO.init();
   const agents = await getTodayAgents(todoistDAO);
-  const floorAgents = [];
+  const floorAgents = await getDoneTodayAgents(todoistDAO);
   const topAgents = await getNoDateAgents(todoistDAO);
   topAgents.forEach(agent => {
     const x = random.range(20, width - 20);
@@ -29,6 +29,11 @@ const sketch = async ({ width, height }) => {
       const y = random.range(10 + (topMargin * height), height - floorMargin * height);
       agent.setInitialPosition(x, y);
     });
+  floorAgents.forEach(agent => {
+    const x = random.range(20, width - 20);
+    const y = random.range(height - floorMargin * height, height-20);
+    agent.setInitialPosition(x, y);
+  });
 
   return ({ context, width, height }) => {
     // Margin in inches

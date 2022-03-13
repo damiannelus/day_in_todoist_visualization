@@ -6,6 +6,7 @@ const SYNC_API_URL = "https://api.todoist.com/sync/v8/"
 const NO_DATE_FILTER = `tasks?filter=no date`
 const TODAY_FILTER = `tasks?filter=today`
 const PROJECTS = `projects/`
+const COMPLETED = `completed/`
 const myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${TODOIST_BEREAER_TOKEN}`);
 const requestOptions = {
@@ -47,6 +48,22 @@ export class TodoistDAO {
         console.error(err)
       });
     return todayTasks;
+  }
+
+  async getDoneToday() {
+    const today = new Date();
+    const todayFormatted = today.toISOString().split('T')[0];
+    const doneToday = await fetch(`${SYNC_API_URL}${COMPLETED}get_all?since=${todayFormatted}T00:00`, requestOptions)
+    .then(response => {
+      console.log(
+        `Response: ${response.status} ${response.statusText}`
+      );
+      return response.json();
+    }).catch((err) => {
+      console.error(err)
+    });
+    console.log('doneToday@getDoneToday :>> ', doneToday);
+    return doneToday;
   }
   
   async getProjectByID(projectID) {
