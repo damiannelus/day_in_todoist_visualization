@@ -10,7 +10,9 @@ Creative approach toward visualizing a day in todoist
 3. ✅ ~~Stub "floor" agents (in the future - tasks that miss the due date)~~
 4. ✅ ~~Animate "floor" and existing agents.~~
 5. ✅ ~~Write tests~~
-6. Hooks vs regular checks.
-7. Add task and project models.
-8. Test task and project models.
-9. Obtain data from the Todoist and map to local models.
+6. ✅ ~~Hooks vs regular checks.~~
+7. ✅ ~~Add task and project models.~~
+8. Refactor!
+9. Test task and project models.
+10. ✅ ~~Obtain data from the Todoist and map to local models.~~
+11. Obtain data from sync API (done tasks)

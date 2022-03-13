@@ -1,41 +1,34 @@
+require('dotenv').config()
 import canvasSketch from 'canvas-sketch';
 // const Agent = require('../models/agent');
-import { Agent } from '../models/agent.js'
 import random from 'canvas-sketch-util/random';
-require('dotenv').config()
+import { getNoDateAgents, getTodayAgents, Todoist} from '../middleware/todoist/todoist'
 
 const settings = {
-  dimensions: [1080, 1080],
+  dimensions: [200, 200],
   animate: true
 };
 
 const floorMargin = 0.2;
 const topMargin = 0.2;
 
-const sketch = ({ width, height }) => {
-  const agents = [];
+const sketch = async ({ width, height }) => {
+  const todoist = new Todoist();
+  await todoist.getProjectsLibrary();
+  const agents = await getTodayAgents(todoist);
   const floorAgents = [];
-  const topAgents = [];
-
-  for (let i = 0; i < 50; i++) {
-    const x = random.range(20, width-20);
+  const topAgents = await getNoDateAgents(todoist);
+  topAgents.forEach(agent => {
+    const x = random.range(20, width - 20);
     const y = random.range(10, 10 + (topMargin * height));
-    topAgents.push(new Agent(x, y, false));    
-  }
+    agent.setInitialPosition(x, y);
+  });
+  agents.forEach(agent => {
+      const x = random.range(20, width - 20);
+      const y = random.range(10 + (topMargin * height), height - floorMargin * height);
+      agent.setInitialPosition(x, y);
+    });
 
-  for (let i = 0; i < 35; i++) {
-    const x = random.range(20, width-20);
-    const y = random.range(10 + (topMargin * height), height - floorMargin * height);
-
-    agents.push(new Agent(x, y, true));
-  }
-
-  for (let i = 0; i < 5; i++) {
-    const x = random.range(20, width-20);
-    const y = random.range((1 - floorMargin) * height, height-20)
-
-    floorAgents.push(new Agent(x, y, false));
-  }
   return ({ context, width, height }) => {
     // Margin in inches
     const margin = 1 / 4;
@@ -68,7 +61,7 @@ const sketch = ({ width, height }) => {
         agent.bounce(width, height);
       }
     }
-    
+
     for (const agentIndex in topAgents) {
       if (Object.hasOwnProperty.call(topAgents, agentIndex)) {
         const agent = topAgents[agentIndex];
@@ -82,5 +75,3 @@ const sketch = ({ width, height }) => {
 };
 
 canvasSketch(sketch, settings);
-
-export {sketch}

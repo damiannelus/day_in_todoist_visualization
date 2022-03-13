@@ -1,17 +1,23 @@
 
 import {Vector} from './vector'
 import random from 'canvas-sketch-util/random';
+import {getProjectColorValue} from '../models/projectColorMap'
 const utils = require('../utils/utils');
 
 class Agent {
-  constructor(x, y, isFloating) {
+  constructor(x, y, isFloating, radius, colorID) {
     this.pos = new Vector(x,y);
     this.anchor = new Vector(x,y);
-    this.radius = random.range(4,12);
+    this.radius = radius > 0 ? radius : random.range(4,12);
     this.isFloating = isFloating;
     this.vel = isFloating ? new Vector(random.range(-1,1), random.range(-1,1)) : new Vector(0,0);
     this.taskID = 0;
-    this.colorID = 666;
+    this.colorID = colorID > 0 ? colorID : 666;
+  }
+
+  setInitialPosition(x,y) {
+    this.pos = new Vector(x,y);
+    this.anchor = new Vector(x,y);
   }
 
 
@@ -26,7 +32,7 @@ class Agent {
     context.lineWidth = 3;
     context.beginPath();
     context.arc(0, 0, this.radius, 0, Math.PI * 2);
-    context.strokeStyle = this.color;
+    context.strokeStyle = getProjectColorValue(this.colorID); //TODO: this should be set once, as color is not updating on each draw
     context.fill();
     context.stroke();
     context.restore();
