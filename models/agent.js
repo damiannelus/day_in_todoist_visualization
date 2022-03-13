@@ -12,7 +12,7 @@ class Agent {
     this.isFloating = isFloating;
     this.vel = isFloating ? new Vector(random.range(-1,1), random.range(-1,1)) : new Vector(0,0);
     this.taskID = 0;
-    this.colorID = colorID > 0 ? colorID : 666;
+    this.color = getProjectColorValue(colorID);
   }
 
   setInitialPosition(x,y) {
@@ -32,7 +32,7 @@ class Agent {
     context.lineWidth = 3;
     context.beginPath();
     context.arc(0, 0, this.radius, 0, Math.PI * 2);
-    context.strokeStyle = getProjectColorValue(this.colorID); //TODO: this should be set once, as color is not updating on each draw
+    context.strokeStyle = this.color;
     context.fill();
     context.stroke();
     context.restore();
